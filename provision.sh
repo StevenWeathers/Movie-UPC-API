@@ -26,7 +26,7 @@ then
   mysql -uroot movieupc< /home/vagrant/movie-upc-api/movieupc_structure.sql
 
   # Add sql01 hostname to /etc/hosts to match production
-  echo "localhost sql01" >> /etc/hosts
+  echo "127.0.0.1 sql01" >> /etc/hosts
 
   service mysql restart
 
