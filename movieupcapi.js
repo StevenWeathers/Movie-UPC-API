@@ -51,16 +51,12 @@ server.route({
   handler: function (request, reply) {
     var upc = request.params.upc;
 
-    if (upc) {
-      // find upc
-      MovieUPC.find({ where: {UPC: upc} }).success(function(movie) {
-        reply(movie);
-      }).error(function(error){
-        reply(error);
-      });
-    } else {
-      reply("Movie UPC API");
-    }
+    // find upc
+    MovieUPC.findOne({ where: {UPC: upc} }).then(function(movie) {
+      reply(movie);
+    }).catch(function(error){
+      reply(error);
+    });
   }
 });
 
@@ -72,9 +68,9 @@ server.route({
 
   	if (upc) {
   		// find upc
-  		MovieUPC.find({ where: {UPC: upc} }).success(function(movie) {
+  		MovieUPC.findOne({ where: {UPC: upc} }).then(function(movie) {
   		  reply(movie);
-  		}).error(function(error){
+  		}).catch(function(error){
   			reply(error);
   		});
   	} else {
