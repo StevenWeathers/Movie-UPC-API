@@ -1,5 +1,5 @@
-.vagrant/
+node_modules/
 .DS_Store
 .idea/*
-api/cron/*.txt
-api/cron/*.zip
+cron/*.txt
+cron/*.zip
