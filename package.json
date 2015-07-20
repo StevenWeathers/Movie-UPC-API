@@ -16,10 +16,9 @@
     "url": "https://github.com/StevenWeathers/Movie-UPC-API/issues"
   },
   "dependencies": {
-    "hapi": "~6.0.2",
-    "moment": "~2.7.0",
-    "sequelize": "~1.7.9",
-    "mysql": "~2.4.1",
+    "hapi": "^8.8.0",
+    "sequelize": "^3.4.1",
+    "mysql": "^2.8.0",
     "newrelic": "^1.21.1"
   }
 }

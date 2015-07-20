@@ -1,5 +1,4 @@
 var newrelic = require('newrelic');
-var port = process.env.PORT || 3000;
 var dbConfig = {
   host: process.env.DBHOST || '127.0.0.1',
   pass: process.env.DBPASS || 'D1sneyRocks',
@@ -7,7 +6,10 @@ var dbConfig = {
   database: process.env.DBDATABASE || 'movieupc'
 };
 var Hapi = require('hapi');
-var server = new Hapi.Server(port);
+var server = new Hapi.Server();
+server.connection({
+    port: process.env.PORT || 3000
+});
 var Sequelize = require("sequelize");
 
 var sequelize = new Sequelize(dbConfig.database, dbConfig.user, dbConfig.pass, {
@@ -45,6 +47,25 @@ var MovieUPC = sequelize.define('upc', {
 
 server.route({
   method: 'GET',
+  path: '/upc/{upc}',
+  handler: function (request, reply) {
+    var upc = request.params.upc;
+
+    if (upc) {
+      // find upc
+      MovieUPC.find({ where: {UPC: upc} }).success(function(movie) {
+        reply(movie);
+      }).error(function(error){
+        reply(error);
+      });
+    } else {
+      reply("Movie UPC API");
+    }
+  }
+});
+
+server.route({
+  method: 'GET',
   path: '/',
   handler: function (request, reply) {
   	var upc = request.query.upc;
@@ -52,10 +73,10 @@ server.route({
   	if (upc) {
   		// find upc
   		MovieUPC.find({ where: {UPC: upc} }).success(function(movie) {
-		  reply(movie);
-		}).error(function(error){
-			reply(error);
-		});
+  		  reply(movie);
+  		}).error(function(error){
+  			reply(error);
+  		});
   	} else {
   		reply("Movie UPC API");
   	}
