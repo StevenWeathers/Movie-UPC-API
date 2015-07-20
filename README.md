@@ -3,9 +3,9 @@ Movie UPC API
 
 Movie UPC API
 
-Runs on Docker, Node 0.10.x (Planning to upgrade to 0.12.x soon)
+Runs on Docker, Node 0.12.x
 
-Requires MySQL (MariaDB imo) and CRON for the data download/import
+Requires MySQL (I suggest MariaDB) and CRON for the data download/import
 
 CRONTAB task
 ```
