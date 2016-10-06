@@ -1,4 +1,6 @@
+"use strict";
 var newrelic = require('newrelic');
+var _ = require('lodash');
 var dbConfig = {
   host: process.env.DBHOST || '127.0.0.1',
   pass: process.env.DBPASS || 'D1sneyRocks',
@@ -14,7 +16,8 @@ var Sequelize = require("sequelize");
 
 var sequelize = new Sequelize(dbConfig.database, dbConfig.user, dbConfig.pass, {
   host: dbConfig.host
-})
+});
+var { graphql, buildSchema } = require('graphql');
 
 /**
  * MovieUPC Model
@@ -54,6 +57,64 @@ server.route({
     // find upc
     MovieUPC.findOne({ where: {UPC: upc} }).then(function(movie) {
       reply(movie);
+    }).catch(function(error){
+      reply(error);
+    });
+  }
+});
+
+server.route({
+  method: 'POST',
+  path: "/upc/{upc}",
+  handler: function(request,reply) {
+    var movieQLSchema = buildSchema(`
+      type Query {
+        DVD_Title: String
+        Studio: String
+        Released: String
+        Status: String
+        Sound: String
+        Versions: String
+        Price: String
+        Rating: String
+        Year: String
+        Genre: String
+        Aspect: String
+        UPC: String
+        DVD_ReleaseDate: String
+        ID: String
+        Timestamp: String
+        movieupc_id: Int
+      }
+    `);
+
+    var upc = request.params.upc;
+    var requestedData = (_.size(request.payload) > 0) ? request.payload : `
+      {
+        DVD_Title
+        Studio
+        Released
+        Status
+        Sound
+        Versions
+        Price
+        Rating
+        Year
+        Genre
+        Aspect
+        UPC
+        DVD_ReleaseDate
+        ID
+        Timestamp
+        movieupc_id
+      }
+    `;
+
+    // find upc
+    MovieUPC.findOne({ where: {UPC: upc} }).then(function(movie) {
+      graphql(movieQLSchema, requestedData, movie).then((response) => {
+        reply(response.data);
+      });
     }).catch(function(error){
       reply(error);
     });
