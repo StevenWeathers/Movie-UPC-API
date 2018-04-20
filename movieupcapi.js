@@ -13,7 +13,7 @@ server.connection({
     port: process.env.PORT || 3000
 });
 var Sequelize = require("sequelize");
-
+console.log('dbConfig >>> ', dbConfig);
 var sequelize = new Sequelize(dbConfig.database, dbConfig.user, dbConfig.pass, {
   host: dbConfig.host
 });
