@@ -53,11 +53,13 @@ server.route({
   path: '/upc/{upc}',
   handler: function (request, reply) {
     var upc = request.params.upc;
-
+console.log(upc);
     // find upc
     MovieUPC.findOne({ where: {UPC: upc} }).then(function(movie) {
+      console.log(movie);
       reply(movie);
     }).catch(function(error){
+      console.log(error);
       reply(error);
     });
   }
