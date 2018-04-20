@@ -1,0 +1,7 @@
+cron/
+.gitignore
+.editorconfig
+movieupc_structure.sql
+README.md
+Dockerfile
+node_modules/

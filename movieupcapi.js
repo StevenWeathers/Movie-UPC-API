@@ -1,28 +1,27 @@
-"use strict";
-var newrelic = require('newrelic');
-var _ = require('lodash');
-var dbConfig = {
+'use strict'
+const _ = require('lodash')
+const dbConfig = {
   host: process.env.DBHOST || '127.0.0.1',
   pass: process.env.DBPASS || 'D1sneyRocks',
   user: process.env.DBUSER || 'movieupc',
   database: process.env.DBDATABASE || 'movieupc'
-};
-var Hapi = require('hapi');
-var server = new Hapi.Server();
+}
+const Hapi = require('hapi')
+const server = new Hapi.Server()
 server.connection({
-    port: process.env.PORT || 3000
-});
-var Sequelize = require("sequelize");
-console.log('dbConfig >>> ', dbConfig);
-var sequelize = new Sequelize(dbConfig.database, dbConfig.user, dbConfig.pass, {
+  port: process.env.PORT || 3000
+})
+const Sequelize = require('sequelize')
+
+const sequelize = new Sequelize(dbConfig.database, dbConfig.user, dbConfig.pass, {
   host: dbConfig.host
-});
-var { graphql, buildSchema } = require('graphql');
+})
+const { graphql, buildSchema } = require('graphql')
 
 /**
  * MovieUPC Model
  */
-var MovieUPC = sequelize.define('upc', {
+const MovieUPC = sequelize.define('upc', {
   DVD_Title: Sequelize.STRING,
   Studio: Sequelize.STRING,
   Released: Sequelize.STRING,
@@ -39,37 +38,35 @@ var MovieUPC = sequelize.define('upc', {
   ID: Sequelize.STRING,
   Timestamp: Sequelize.STRING,
   movieupc_id: {
-  	type: Sequelize.INTEGER,
-  	autoIncrement: true,
-  	primaryKey: true
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
   }
 }, {
-	timestamps: false,
-	freezeTableName: true
-});
+  timestamps: false,
+  freezeTableName: true
+})
 
 server.route({
   method: 'GET',
   path: '/upc/{upc}',
   handler: function (request, reply) {
-    var upc = request.params.upc;
-console.log(upc);
+    const upc = request.params.upc
+
     // find upc
-    MovieUPC.findOne({ where: {UPC: upc} }).then(function(movie) {
-      console.log(movie);
-      reply(movie);
-    }).catch(function(error){
-      console.log(error);
-      reply(error);
-    });
+    MovieUPC.findOne({ where: {UPC: upc} }).then(function (movie) {
+      reply(movie)
+    }).catch(function (error) {
+      reply(error)
+    })
   }
-});
+})
 
 server.route({
   method: 'POST',
-  path: "/upc/{upc}",
-  handler: function(request,reply) {
-    var movieQLSchema = buildSchema(`
+  path: '/upc/{upc}',
+  handler: function (request, reply) {
+    const movieQLSchema = buildSchema(`
       type Query {
         DVD_Title: String
         Studio: String
@@ -88,10 +85,10 @@ server.route({
         Timestamp: String
         movieupc_id: Int
       }
-    `);
+    `)
 
-    var upc = request.params.upc;
-    var requestedData = (_.size(request.payload) > 0) ? request.payload : `
+    const upc = request.params.upc
+    const requestedData = (_.size(request.payload) > 0) ? request.payload : `
       {
         DVD_Title
         Studio
@@ -110,38 +107,38 @@ server.route({
         Timestamp
         movieupc_id
       }
-    `;
+    `
 
     // find upc
-    MovieUPC.findOne({ where: {UPC: upc} }).then(function(movie) {
+    MovieUPC.findOne({ where: {UPC: upc} }).then(function (movie) {
       graphql(movieQLSchema, requestedData, movie).then((response) => {
-        reply(response.data);
-      });
-    }).catch(function(error){
-      reply(error);
-    });
+        reply(response.data)
+      })
+    }).catch(function (error) {
+      reply(error)
+    })
   }
-});
+})
 
 server.route({
   method: 'GET',
   path: '/',
   handler: function (request, reply) {
-  	var upc = request.query.upc;
+    const upc = request.query.upc
 
-  	if (upc) {
-  		// find upc
-  		MovieUPC.findOne({ where: {UPC: upc} }).then(function(movie) {
-  		  reply(movie);
-  		}).catch(function(error){
-  			reply(error);
-  		});
-  	} else {
-  		reply("Movie UPC API");
-  	}
+    if (upc) {
+      // find upc
+      MovieUPC.findOne({ where: {UPC: upc} }).then(function (movie) {
+        reply(movie)
+      }).catch(function (error) {
+        reply(error)
+      })
+    } else {
+      reply('Movie UPC API')
+    }
   }
-});
+})
 
-server.start(function(){
-  console.log('Server running at: ', server.info.uri);
-});
+server.start(function () {
+  console.log(`Server running at: ${server.info.uri}`)
+})

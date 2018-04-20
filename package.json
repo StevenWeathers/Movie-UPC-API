@@ -1,9 +1,10 @@
 {
-  "name": "Movie-UPC-API",
+  "name": "movie-upc-api",
   "version": "0.0.0",
   "description": "Movie UPC API",
   "main": "movieupcapi.js",
   "scripts": {
+    "start": "node movieupcapi.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,7 +21,9 @@
     "hapi": "^8.8.0",
     "lodash": "^4.16.4",
     "sequelize": "^3.4.1",
-    "mysql": "^2.8.0",
-    "newrelic": "^1.21.1"
+    "mysql": "^2.8.0"
+  },
+  "devDependencies": {
+    "standard": "^11.0.1"
   }
 }
