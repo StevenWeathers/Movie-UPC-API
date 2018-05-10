@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #run the download script
-sh download.sh
+sh /app/download.sh
 
 #import the data into table
-sh import.sh
+sh /app/import.sh

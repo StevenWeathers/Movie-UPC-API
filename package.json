@@ -17,11 +17,8 @@
     "url": "https://github.com/StevenWeathers/Movie-UPC-API/issues"
   },
   "dependencies": {
-    "graphql": "^0.7.1",
-    "hapi": "^8.8.0",
-    "lodash": "^4.16.4",
-    "sequelize": "^3.4.1",
-    "mysql": "^2.8.0"
+    "hapi": "^17.4.0",
+    "mongoose": "^5.0.0"
   },
   "devDependencies": {
     "standard": "^11.0.1"

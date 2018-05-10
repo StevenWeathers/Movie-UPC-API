@@ -1,0 +1,29 @@
+version: '3.1'
+services:
+  web:
+    build: .
+    depends_on:
+      - mongo
+    ports:
+     - "3000:3000"
+    networks:
+      - piedpiper
+  mongo:
+    image: "mongo:3.6"
+    volumes:
+      - dbdata:/mongo/db
+    networks:
+      - piedpiper
+  apicron:
+    build: cron/
+    depends_on:
+      - mongo
+    networks:
+      - piedpiper
+
+networks:
+  piedpiper:
+    driver: bridge
+
+volumes:
+  dbdata:
