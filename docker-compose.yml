@@ -15,11 +15,15 @@ services:
     networks:
       - piedpiper
   apicron:
-    build: cron/
+    image: "stevenweathers/movie-upc-api-cronjob"
     depends_on:
       - mongo
     networks:
       - piedpiper
+    environment:
+      - mongo_host="mongo"
+      - mongo_db="movieupc"
+      - mongo_collection="movies"
 
 networks:
   piedpiper:
