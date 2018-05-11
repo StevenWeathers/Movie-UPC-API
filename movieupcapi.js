@@ -31,7 +31,8 @@ const schema = new mongoose.Schema({
   Timestamp: String
 })
 
-schema.index({ 'UPC': 1 }, { unique: true })
+// disable until data can be sanitized
+// schema.index({ 'UPC': 1 }, { unique: true })
 
 const Movie = mongoose.model('Movie', schema)
 
