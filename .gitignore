@@ -4,5 +4,6 @@ node_modules/
 cron/*.txt
 cron/*.zip
 release
+.vscode
 
 movie-upc-api*
