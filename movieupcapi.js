@@ -6,7 +6,7 @@ const Hapi = require('hapi')
 const server = Hapi.server({
   port: process.env.PORT || 3000
 })
-const mongoHost = process.env.mongo_host || 'mongo'
+const mongoHost = process.env.mongo_host || 'localhost'
 const mongoPort = process.env.mongo_port || '27017'
 const mongoCollection = process.env.mongo_collection || 'movieupc'
 const mongoDbUrl = `mongodb://${mongoHost}:${mongoPort}/${mongoCollection}`
@@ -36,6 +36,7 @@ const schema = new mongoose.Schema({
 
 const Movie = mongoose.model('Movie', schema)
 
+// example UPC  024543155782
 server.route({
   method: 'GET',
   path: '/upc/{upc}',

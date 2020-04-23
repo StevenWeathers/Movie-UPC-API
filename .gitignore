@@ -3,3 +3,6 @@ node_modules/
 .idea/*
 cron/*.txt
 cron/*.zip
+release
+
+movie-upc-api*
