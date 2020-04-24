@@ -3,3 +3,7 @@ node_modules/
 .idea/*
 cron/*.txt
 cron/*.zip
+release
+.vscode
+
+movie-upc-api*
