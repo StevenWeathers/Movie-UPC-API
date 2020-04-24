@@ -3,7 +3,7 @@ Movie UPC API
 
 Movie UPC API
 
-Runs on Docker, Node 0.12.x
+Runs on Docker, Go 1.13
 
 Requires MongoDb container and stevenweathers/movie-upc-api-cronjob Docker image for the data download/import
 

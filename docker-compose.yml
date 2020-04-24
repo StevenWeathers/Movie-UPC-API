@@ -9,7 +9,7 @@ services:
     networks:
       - piedpiper
     environment:
-      - mongo_host="mongo"
+      - "mongo_host=mongo"
   mongo:
     image: "mongo:3.6"
     ports:
@@ -25,9 +25,9 @@ services:
     networks:
       - piedpiper
     environment:
-      - mongo_host="mongo"
-      - mongo_db="movieupc"
-      - mongo_collection="movies"
+      - "mongo_host=mongo"
+      - "mongo_db=movieupc"
+      - "mongo_collection=movies"
 
 networks:
   piedpiper:
