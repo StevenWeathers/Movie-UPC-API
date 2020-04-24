@@ -16,7 +16,8 @@ import (
 )
 
 type movie struct {
-	DVDTitle       string `json:"DVD_Title"`
+	MID            string `json:"_id" bson:"_id"`
+	DVDTitle       string `json:"DVD_Title" bson:"DVD_Title"`
 	Studio         string
 	Released       string
 	Status         string
@@ -28,7 +29,7 @@ type movie struct {
 	Genre          string
 	Aspect         string
 	UPC            string
-	DVDReleaseDate string `json:"DVD_ReleaseDate"`
+	DVDReleaseDate string `json:"DVD_ReleaseDate" bson:"DVD_ReleaseDate"`
 	ID             string
 	Timestamp      string
 }
